@@ -10,6 +10,7 @@
 	let dotsCanvasContract = null;
 	let imageURL = '';
 	let dotName = '';
+	let dotID = 0;
 
 	onMount(async () => {
 		dotsCanvasContract = instantiateDotsCanvasContract();
@@ -17,6 +18,7 @@
 		const newestDotMetadata = await getDotsMetadata(dotsCanvasContract, totalNrOfDots);
 		imageURL = newestDotMetadata.image;
 		dotName = newestDotMetadata.name;
+		dotID = totalNrOfDots;
 
 		dotsCanvasContract.on('CanvasMinted', async (_owner, id) => {
 			// Update Dot counter
@@ -26,6 +28,7 @@
 			const newDotMetadata = await getDotsMetadata(dotsCanvasContract, id);
 			imageURL = newDotMetadata.image;
 			dotName = newDotMetadata.name;
+			dotID = id;
 		});
 	});
 </script>
@@ -36,12 +39,12 @@
 
 <section>
 	<h1>
-		Total number of dots: {totalNrOfDots}
+		<!-- Total number of Dot NFTs: {totalNrOfDots} -->
+		</h1>
 		{#if imageURL}
 			<img src={imageURL} alt={dotName} />
-			<p>{dotName}</p>
+			<h1>{dotName} - #{dotID}</h1>
 		{/if}
-	</h1>
 </section>
 
 <style>
