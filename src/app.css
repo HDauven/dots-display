@@ -50,6 +50,7 @@ h2,
 p {
 	font-weight: 400;
 	color: var(--pure-white);
+	text-shadow: 1px 1px #000;
 }
 
 p {
