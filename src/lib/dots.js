@@ -1,7 +1,7 @@
 import { Contract, ethers} from 'ethers'
 import DotsCanvasABI from './DotsCanvasABI.json'
 
-const DOTS_CANVAS_CONTRACT = '0x797F6B319603c7A7fE5E6110517D435eC59e6Fc0'
+const DOTS_CANVAS_CONTRACT = '0x5c40C775090D5B5149383AeF57EBD6AE9d3d31f8'
 const NETWORK = 'https://l2.testnet.nahmii.io'
 
 export const getDotsMetadata = async (contract, tokenID) => {
