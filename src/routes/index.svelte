@@ -42,15 +42,13 @@
 </svelte:head>
 
 <section>
-	<h1>
-		<!-- Total number of Dot NFTs: {totalNrOfDots} -->
-		</h1>
-		{#if imageURL}
-			<img src={imageURL} alt={dotName} />
-			<h1>{dotName} - #{dotID}</h1>
-		{:else}
-			<h1>No Dots minted yet.</h1>
-		{/if}
+	<h1><!-- Total number of Dot NFTs: {totalNrOfDots} --></h1>
+	{#if imageURL}
+		<img src={imageURL} alt={dotName} />
+		<h1>{dotName} - #{dotID}</h1>
+	{:else}
+		<h1>No Dots minted yet.</h1>
+	{/if}
 </section>
 
 <style>
@@ -64,5 +62,10 @@
 
 	h1 {
 		width: 100%;
+	}
+
+	img {
+		width: 512px;
+		height: 512px;
 	}
 </style>
