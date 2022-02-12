@@ -3,7 +3,32 @@
 </script>
 
 <script>
+	import { onMount } from 'svelte';
 	import Counter from '$lib/Counter.svelte';
+	import { getDotsMetadata, instantiateDotsCanvasContract, totalNumberOfDots } from '../lib/dots';
+
+	let totalNrOfDots = 0;
+	let dotsCanvasContract = null;
+	let imageURL = '';
+	let dotName = '';
+
+	onMount(async () => {
+		dotsCanvasContract = instantiateDotsCanvasContract();
+		totalNrOfDots = await totalNumberOfDots(dotsCanvasContract);
+		const newestDotMetadata = await getDotsMetadata(dotsCanvasContract, totalNrOfDots);
+		imageURL = newestDotMetadata.image;
+		dotName = newestDotMetadata.name;
+
+		dotsCanvasContract.on('CanvasMinted', async (_owner, id) => {
+			// Update Dot counter
+			totalNrOfDots = await totalNumberOfDots(dotsCanvasContract);
+
+			// Update Dot NFT
+			const newDotMetadata = await getDotsMetadata(dotsCanvasContract, id);
+			imageURL = newDotMetadata.image;
+			dotName = newDotMetadata.name;
+		});
+	});
 </script>
 
 <svelte:head>
@@ -19,6 +44,11 @@
 			</picture>
 		</div>
 
+		Total number of dots: {totalNrOfDots}
+		{#if imageURL}
+			<img src={imageURL} alt={dotName} />
+			<p>{dotName}</p>
+		{/if}
 		to your new<br />SvelteKit app
 	</h1>
 
