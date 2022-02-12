@@ -15,10 +15,14 @@
 	onMount(async () => {
 		dotsCanvasContract = instantiateDotsCanvasContract();
 		totalNrOfDots = await totalNumberOfDots(dotsCanvasContract);
-		const newestDotMetadata = await getDotsMetadata(dotsCanvasContract, totalNrOfDots);
-		imageURL = newestDotMetadata.image;
-		dotName = newestDotMetadata.name;
-		dotID = totalNrOfDots;
+		if (totalNrOfDots <= 0) {
+			dotID = 0;
+		} else {
+			const newestDotMetadata = await getDotsMetadata(dotsCanvasContract, totalNrOfDots);
+			imageURL = newestDotMetadata.image;
+			dotName = newestDotMetadata.name;
+			dotID = totalNrOfDots;
+		}
 
 		dotsCanvasContract.on('CanvasMinted', async (_owner, id) => {
 			// Update Dot counter
@@ -44,6 +48,8 @@
 		{#if imageURL}
 			<img src={imageURL} alt={dotName} />
 			<h1>{dotName} - #{dotID}</h1>
+		{:else}
+			<h1>No Dots minted yet.</h1>
 		{/if}
 </section>
 
